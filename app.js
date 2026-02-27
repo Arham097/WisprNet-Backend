@@ -2,9 +2,10 @@ const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
 const dotenv = require("dotenv");
+dotenv.config();
 const globalErrorHandler = require("./Controllers/errorController.js");
 const userRoutes = require("./Routes/userRoutes.js");
-dotenv.config();
+const emergencyRoutes = require("./Routes/emergencyRoutes.js");
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.get('/api/getmsg',(req,res)=>{
 
 // Routes
 app.use("/api/users", userRoutes);
+app.use("/api", emergencyRoutes);
 
 // Global Error Handling Middleware
 app.use(globalErrorHandler);
