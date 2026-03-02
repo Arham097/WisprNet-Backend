@@ -1,6 +1,9 @@
 const EmergencyMessage = require("../Models/emergencyMessageModel.js");
-const { sendSms } = require("../utils/TwilioSmsService.js");
+const SmsServiceFactory = require("../utils/sms/SmsServiceFactory.js");
 const asyncErrorHandler = require("../utils/asyncErrorHandler.js");
+
+// Resolve the SMS strategy once at startup (driven by SMS_PROVIDER env var)
+const smsService = SmsServiceFactory.create();
 
 // POST /api/emergency-sms
 exports.handleEmergencySms = asyncErrorHandler(async (req, res, next) => {
@@ -23,8 +26,8 @@ exports.handleEmergencySms = asyncErrorHandler(async (req, res, next) => {
     status: "pending",
   });
 
-  // Send SMS via Twilio
-  const message = await sendSms(from, to, content);
+  // Send SMS via the configured provider (Strategy Pattern)
+  const message = await smsService.sendSms(from, to, content);
   record.status = "sent";
   record.twilioSid = message.sid;
   await record.save();
