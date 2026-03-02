@@ -17,6 +17,12 @@ app.get('/api/getmsg',(req,res)=>{
     res.status(200).json({ message: "Hello" });
 })
 
+app.post("/wisprnet",(req,res)=>{
+    const data = req.body;
+    console.log("Received data:", data);
+    res.status(200).json({ message: "Data received successfully", receivedData: data });
+})
+
 // Routes
 app.use("/api/users", userRoutes);
 
