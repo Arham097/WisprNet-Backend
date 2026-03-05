@@ -9,8 +9,15 @@ const emergencyRoutes = require("./Routes/emergencyRoutes.js");
 
 const app = express();
 
-// Middleware
-app.use(cors({ origin: ["http://localhost:8081"], credentials: true }));
+app.use(
+  cors({
+    origin: [
+      "http://localhost:8081",
+      "http://localhost:19006"
+    ],
+    credentials: true
+  })
+);
 app.use(morgan("dev"));
 app.use(express.json());
 
