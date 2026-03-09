@@ -30,7 +30,7 @@ exports.handleEmergencySms = asyncErrorHandler(async (req, res, next) => {
   // Send SMS via the configured provider (Strategy Pattern)
   const message = await smsService.sendSms(from, to, content);
   record.status = "sent";
-  record.twilioSid = message.sid;
+  record.VeevoTechSid = message.sid;
   await record.save();
 
   res.status(200).json({ success: true, sid: message.sid });

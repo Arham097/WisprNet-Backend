@@ -36,7 +36,7 @@ const emergencyMessageSchema = new mongoose.Schema(
       enum: ["pending", "sent", "delivered", "failed"],
       default: "pending",
     },
-    twilioSid: {
+    VeevoTechSid: {
       type: String,
       default: null,
     },
