@@ -1,12 +1,14 @@
 const TwilioStrategy = require("./TwilioStrategy");
+const VeevoTechStrategy = require("./VeevoTechStrategy");
 
 /**
  * SmsServiceFactory — returns the correct SmsStrategy instance
  * based on the SMS_PROVIDER environment variable (or a manual override).
  *
  * Usage:
- *   const smsService = SmsServiceFactory.create();          // reads SMS_PROVIDER env
- *   const smsService = SmsServiceFactory.create("twilio");  // explicit
+ *   const smsService = SmsServiceFactory.create();            // reads SMS_PROVIDER env
+ *   const smsService = SmsServiceFactory.create("twilio");    // explicit
+ *   const smsService = SmsServiceFactory.create("veevotech"); // explicit
  *
  * To add a new provider:
  *   1. Create  utils/sms/YourProviderStrategy.js  extending SmsStrategy
@@ -16,6 +18,7 @@ const TwilioStrategy = require("./TwilioStrategy");
 class SmsServiceFactory {
   static strategies = {
     twilio: () => new TwilioStrategy(),
+    veevotech: () => new VeevoTechStrategy(),
   };
 
   /**
