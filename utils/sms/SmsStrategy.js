@@ -14,7 +14,7 @@ class SmsStrategy {
    * @param {string} content - Message body
    * @returns {Promise<{ sid: string }>} - Must resolve with at least a `sid`
    */
-  async sendSms(from, to, content) {
+  async sendSms(from, to, content, fromName) {
     throw new Error(
       `sendSms() is not implemented. ${this.constructor.name} must override it.`
     );

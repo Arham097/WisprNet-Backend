@@ -38,10 +38,10 @@ class VeevoTechStrategy extends SmsStrategy {
    * @param {string} content - Message body
    * @returns {Promise<{ sid: string }>}
    */
-  async sendSms(from, to, content) {
+  async sendSms(from, to, content, fromName) {
     const sendernum = toVeevoFormat(from);
     const receivernum = toVeevoFormat(to);
-    const textmessage = `From : ${sendernum} \n${content}`;
+    const textmessage = `From : ${fromName} (${sendernum}) \n${content}`;
 
     const response = await axios.post(VEEVOTECH_API_URL, {
       hash: this.apiKey,

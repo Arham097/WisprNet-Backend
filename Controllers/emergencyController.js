@@ -15,6 +15,7 @@ exports.handleEmergencySms = asyncErrorHandler(async (req, res, next) => {
   const from = data.message.from.phone;
   const to = data.message.to.phone;
   const content = data.message.text;
+  const fromName = data.message.from.name || "WisprNet User";
 
   // Save to DB
   const record = await EmergencyMessage.create({
@@ -28,7 +29,7 @@ exports.handleEmergencySms = asyncErrorHandler(async (req, res, next) => {
   });
 
   // Send SMS via the configured provider (Strategy Pattern)
-  const message = await smsService.sendSms(from, to, content);
+  const message = await smsService.sendSms(from, to, content, fromName);
   record.status = "sent";
   record.VeevoTechSid = message.sid;
   await record.save();
@@ -40,7 +41,7 @@ exports.handleEmergencySms = asyncErrorHandler(async (req, res, next) => {
 exports.handleSmsStatus = asyncErrorHandler(async (req, res, next) => {
   const { MessageSid, MessageStatus } = req.body;
   console.log(`[SMS Status] SID: ${MessageSid} | Status: ${MessageStatus}`);
-  await EmergencyMessage.findOneAndUpdate({ twilioSid: MessageSid }, { status: MessageStatus });
+  await EmergencyMessage.findOneAndUpdate({ VeevoTechSid: MessageSid }, { status: MessageStatus });
   res.status(200).json({ success: true });
 });
 
