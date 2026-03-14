@@ -1,10 +1,6 @@
 const { Twilio } = require("twilio");
 const SmsStrategy = require("./SmsStrategy");
 
-/**
- * Convert a local Pakistani number (03xx) to E.164 (+92xx).
- * Already E.164 numbers are returned as-is.
- */
 const toE164 = (number) => {
   const cleaned = String(number).trim();
   if (cleaned.startsWith("+")) return cleaned;
